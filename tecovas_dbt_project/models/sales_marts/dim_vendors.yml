@@ -1,0 +1,16 @@
+version: 2
+
+models:
+  - name: dim_vendors
+    description: "Stores vendor categories derived from products"
+    
+    columns:
+      - name: vendor_category
+        description: "Category for vendors"
+        tests:
+          - not_null
+
+      - name: product_count
+        description: "Product count for each vendor category based on product classification"
+        tests:
+          - not_null

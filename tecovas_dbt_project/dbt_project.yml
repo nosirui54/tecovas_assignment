@@ -1,0 +1,39 @@
+name: 'tecovas_dbt_project'
+version: '1.0.0'
+
+profile: 'tecovas_dbt_project'
+
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+models:
+  tecovas_dbt_project:
+    staging:
+      +schema: staging
+      +materialized: view
+
+    sales_marts:
+      +schema: sales_marts
+
+      dim_users:
+        +materialized: table
+      
+      dim_products:
+        +materialized: table
+      
+      dim_vendors:
+        +materialized: table
+      
+      fact_orders:
+        +materialized: table
+      
+      agg_orders_customer_product:
+        +materialized: incremental

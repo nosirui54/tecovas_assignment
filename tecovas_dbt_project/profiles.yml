@@ -1,0 +1,23 @@
+tecovas_dbt_project:
+  outputs:
+    dev:
+      type: postgres
+      host: localhost
+      user: postgres
+      password: "{{ env_var('DB_PASSWORD') }}"  # Ia'm using environment variable for security
+      port: 5432
+      dbname: tecovas_db
+      schema: staging
+      threads: 4
+
+    prod:
+      type: postgres
+      host: localhost
+      user: postgres
+      password: "{{ env_var('DB_PASSWORD') }}"
+      port: 5432
+      dbname: tecovas_db
+      schema: sales_marts
+      threads: 4
+
+  target: dev

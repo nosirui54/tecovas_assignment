@@ -1,0 +1,32 @@
+version: 2
+
+models:
+  - name: fact_orders
+    description: "Contains all sales transactions and order details"
+    
+    columns:
+      - name: order_id
+        description: "Primary key for each order"
+        tests:
+          - not_null
+
+      - name: user_id
+        description: "References user_id from dim_users"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_users')
+              field: user_id
+
+      - name: product_id
+        description: "References product_id from dim_products"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_products')
+              field: product_id
+
+      - name: quantity
+        description: "Number of units purchased in the order"
+        tests:
+          - not_null
