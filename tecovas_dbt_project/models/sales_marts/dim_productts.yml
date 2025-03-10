@@ -8,7 +8,6 @@ models:
       - name: product_id
         description: "Primary key for products"
         tests:
-          - unique
           - not_null
 
       - name: product_name

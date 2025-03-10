@@ -1,9 +1,10 @@
 """
-Ibrahim Nosiru
+Author: Ibrahim Nosiru
 Date: March 10, 2025
 
-
-Description:
+This script extracts data from FakestoreAPI, transforms it into a structured format,
+and loads it into a PostgreSQL staging schema. It includes error handling, logging, 
+and automatic schema creation.
 
 """
 
@@ -83,12 +84,12 @@ stg_orders = pd.DataFrame([
 stg_products = pd.DataFrame(products)
 stg_users = pd.DataFrame(users)
 
-# Flatten `rating` field in products
+# Flatten rating field in products
 stg_products["rating_rate"] = stg_products["rating"].apply(lambda x: x.get("rate") if isinstance(x, dict) else None)
 stg_products["rating_count"] = stg_products["rating"].apply(lambda x: x.get("count") if isinstance(x, dict) else None)
 stg_products.drop(columns=["rating"], inplace=True)
 
-# Flatten `name` and `address` in users
+# Flatten name and address in users
 stg_users["first_name"] = stg_users["name"].apply(lambda x: x.get("firstname") if isinstance(x, dict) else None)
 stg_users["last_name"] = stg_users["name"].apply(lambda x: x.get("lastname") if isinstance(x, dict) else None)
 stg_users.drop(columns=["name"], inplace=True)

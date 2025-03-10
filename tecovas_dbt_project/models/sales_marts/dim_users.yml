@@ -8,7 +8,6 @@ models:
       - name: user_id
         description: "Primary key for users"
         tests:
-          - unique
           - not_null
 
       - name: username

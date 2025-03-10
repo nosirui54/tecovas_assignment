@@ -4,12 +4,13 @@ This project implements an ELT pipeline and data transformation process using db
 The final output provides a single aggregated table that delivers order level insights, detailing who ordered what and when.
 
 # Project Structure
-models/
-staging/ 
-sales_marts/ 
+* `tecovas_dbt_project/`
+* `models/`
+* `staging/` 
+* `sales_marts/`
 
-Note: macros/ # Custom macros (not used in final implementation)
-tecovas_dbt_project/
+Note: 
+`macros/`  # Custom macros (not used in final implementation)
 
 # dbt
 
@@ -53,14 +54,14 @@ CLI documentation can be found [here](https://docs.getdbt.com/reference/dbt-comm
 ### Upgrading dbt for Local Development
 Ensure that your dbt version matches the major/minor version of your dbt adapter (dbt-postgres). If an upgrade is needed, follow these steps:
 
-``sh
+```sh
 source .\venv/bin/activate
 pip install --ignore-installed -r requirements.txt
 dbt deps --project-dir tecovas_dbt_project
 ```
 If issues persist, you may need to recreate the virtual environment:
 
-``sh
+```sh
 rmdir /s /q venv  # Deletes the existing virtual environment
 python -m venv venv  # Recreate the virtual environment
 .\venv\Scripts\activate  # Activate the new environment
