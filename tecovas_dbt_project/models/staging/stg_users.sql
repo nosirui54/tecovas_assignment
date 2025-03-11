@@ -1,7 +1,7 @@
 {{ config(materialized='view') }}
 
 SELECT 
-    id AS user_id,
+    id,
     username,
     email,
     first_name,

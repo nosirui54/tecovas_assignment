@@ -1,7 +1,7 @@
 {{ config(materialized='table') }}
 
 SELECT 
-    user_id,
+    id AS user_id,
     username,
     email,
     first_name,

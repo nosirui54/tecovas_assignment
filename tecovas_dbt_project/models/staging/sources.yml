@@ -7,4 +7,3 @@ sources:
       - name: stg_orders
       - name: stg_products
       - name: stg_users
-      - name: stg_order_items

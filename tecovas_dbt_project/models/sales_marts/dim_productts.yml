@@ -14,12 +14,18 @@ models:
         description: "Name of the product"
         tests:
           - not_null
+      
+      - name: price
+        description: "Price of the product"
+      
+      - name: description
+
+      - name: image
 
       - name: category
         description: "Category to which the product belongs"
 
-      - name: price
-        description: "Price of the product"
-
       - name: rating
         description: "Average customer rating of the product"
+
+      - name: rating_count

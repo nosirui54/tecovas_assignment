@@ -9,6 +9,7 @@ SELECT
     o.order_date,
     p.product_id,
     p.product_name,
+    p.category AS product_category,
     p.price,
     u.username,
     u.email,

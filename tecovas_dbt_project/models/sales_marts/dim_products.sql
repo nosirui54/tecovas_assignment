@@ -1,8 +1,8 @@
 {{ config(materialized='table') }}
 
 SELECT 
-    product_id,
-    product_name,
+    id AS product_id,
+    title AS product_name,
     price,
     description,
     category,

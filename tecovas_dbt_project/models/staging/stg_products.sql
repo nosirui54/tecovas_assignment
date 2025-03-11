@@ -1,8 +1,8 @@
 {{ config(materialized='view') }}
 
 SELECT 
-    id AS product_id,
-    title AS product_name,
+    id,
+    title,
     price,
     description,
     category,

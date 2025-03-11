@@ -30,3 +30,8 @@ models:
         description: "Number of units purchased in the order"
         tests:
           - not_null
+          
+      - name: product_name
+        description: "Name of the product solds"
+        tests:
+          - not_null   

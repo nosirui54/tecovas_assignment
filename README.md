@@ -38,7 +38,7 @@ tecovas_dbt_project:
       port: 5432
       user: <user>
       password: <your_password>
-      schema: staging_sales_marts
+      schema: sales_marts
       threads: 4
 ```
 
