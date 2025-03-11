@@ -4,7 +4,7 @@ Date: March 10, 2025
 
 This script extracts data from FakestoreAPI, transforms it into a structured format,
 and loads it into a PostgreSQL staging schema. It includes error handling, logging, 
-and automatic schema creation.
+and automatic schema creation
 
 """
 
@@ -38,7 +38,7 @@ except Exception as e:
     logging.error(f"Failed to create schema: {e}")
     exit(1)
 
-# Establish SQLAlchemy connection
+# Establishing a database connection using SQLAlchemy and defining API endpoints for data retrieval and Implementing a retry mechanism to handle transient failures during API requests
 engine = create_engine(f"postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}")
 
 # API Endpoints
@@ -49,7 +49,6 @@ API_ENDPOINTS = {
 }
 
 def fetch_data_with_retry(url, max_retries=5, delay=5, timeout=10):
-    """Fetch data from API with retries."""
     session = requests.Session()
     for attempt in range(1, max_retries + 1):
         try:
@@ -64,7 +63,7 @@ def fetch_data_with_retry(url, max_retries=5, delay=5, timeout=10):
                 logging.error(f"Failed to retrieve data from {url} after {max_retries} attempts.")
                 return None
 
-# Fetch API data
+# Fetching order, product, and user data from API endpoints with retry mechanisms, followed by validation to prevent incomplete or faulty ingestion
 orders = fetch_data_with_retry(API_ENDPOINTS["orders"])
 products = fetch_data_with_retry(API_ENDPOINTS["products"])
 users = fetch_data_with_retry(API_ENDPOINTS["users"])
@@ -74,7 +73,7 @@ if not all([orders, products, users]):
     logging.error("Data retrieval failed. Exiting to prevent incomplete ingestion.")
     exit(1)
 
-# Convert API data to DataFrames
+# This will convert API data to DataFrames and normalize nested order data by extracting product level details for structured analysis
 stg_orders = pd.DataFrame([
     {"order_id": cart["id"], "user_id": cart["userId"], "order_date": cart["date"],
      "product_id": item["productId"], "quantity": item["quantity"]}
@@ -84,12 +83,12 @@ stg_orders = pd.DataFrame([
 stg_products = pd.DataFrame(products)
 stg_users = pd.DataFrame(users)
 
-# Flatten rating field in products
+# Extracting and restructuring rating attributes from the nested product data
 stg_products["rating_rate"] = stg_products["rating"].apply(lambda x: x.get("rate") if isinstance(x, dict) else None)
 stg_products["rating_count"] = stg_products["rating"].apply(lambda x: x.get("count") if isinstance(x, dict) else None)
 stg_products.drop(columns=["rating"], inplace=True)
 
-# Flatten name and address in users
+# Extracting and restructuring user name and address fields for improved accessibility and normalization
 stg_users["first_name"] = stg_users["name"].apply(lambda x: x.get("firstname") if isinstance(x, dict) else None)
 stg_users["last_name"] = stg_users["name"].apply(lambda x: x.get("lastname") if isinstance(x, dict) else None)
 stg_users.drop(columns=["name"], inplace=True)

@@ -4,9 +4,9 @@ WITH orders AS (
     SELECT 
         o.order_id,
         o.user_id,
-        o.order_date,
+        CAST(o.order_date AS DATE) AS order_date,
         o.product_id,
-        o.quantity,
+        o.quantity AS order_qty,
         p.product_name,
         p.price,
         p.category
